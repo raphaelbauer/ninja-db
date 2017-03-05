@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ninja-db-flyway</artifactId>
+    <artifactId>ninja-db-hikari</artifactId>
     <packaging>jar</packaging>
 
     <parent>
@@ -30,16 +30,17 @@
 
     <dependencies>
         
+        
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>4.1.1</version>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.6.0</version>
         </dependency>
-
+     
         <dependency>
             <groupId>org.ninjaframework</groupId>
-            <artifactId>ninja-db-datasources</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>ninja-db-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         
         <dependency>
@@ -48,7 +49,24 @@
             <version>${ninja.version}</version>
             <scope>provided</scope>
         </dependency>
-        
-    </dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.7.13</version>
+            <scope>test</scope>
+        </dependency>
 
+    </dependencies>
 </project>

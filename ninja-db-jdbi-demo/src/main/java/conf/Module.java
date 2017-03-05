@@ -18,17 +18,14 @@ package conf;
 
 import com.google.inject.AbstractModule;
 import ninja.flyway.NinjaFlyway;
-import ninja.jdbc.NinjaJdcModule;
 import ninja.jdbi.NinjaJdbiModule;
 
 public class Module extends AbstractModule {
 
     protected void configure() {
         
-        install(new NinjaJdcModule());
-        
         install(new NinjaFlyway());
-        
+
         install(new NinjaJdbiModule());
     }
 

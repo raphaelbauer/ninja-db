@@ -1,20 +1,17 @@
 package ninja.jdbc;
 
 import com.google.common.collect.Lists;
-import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import javax.sql.DataSource;
 import ninja.utils.NinjaProperties;
 
-public class NinjaJdcModule extends AbstractModule {
+public class NinjaDatasourceConfigProvider implements Provider<NinjaDatasourceConfigs> {
 
     private final String DATASOURCE_PREFIX = "application.datasource";
     private final String DATASOURCE_URL = "url";
@@ -25,42 +22,20 @@ public class NinjaJdcModule extends AbstractModule {
     private final String DATASOURCE_MIGRATION_ENABLED = "migration.enabled";
     private final String DATASOURCE_MIGRATION_USERNAME = "migration.username";
     private final String DATASOURCE_MIGRATION_PASSWORD = "migration.password";
+    
+    private final NinjaProperties ninjaProperties;
+    
+    @Inject
+    public NinjaDatasourceConfigProvider(NinjaProperties ninjaProperties) {
+        this.ninjaProperties = ninjaProperties;
+    }
 
+    @Singleton
     @Override
-    protected void configure() {
-        //nothing to bind...
-    }
-
-    @Provides
-    @Singleton
-    public NinjaDatasources provideNinjaDatasources(NinjaDatasourceConfigs ninjaDatasourceConfigs) {
-        List<NinjaDatasource> ninjaDatasources = Lists.newArrayList();
-
-        for (NinjaDatasourceConfig ninjaDatasourceConfig : ninjaDatasourceConfigs.getDatasources()) {
-            HikariConfig config = new HikariConfig();
-
-            config.setDriverClassName(ninjaDatasourceConfig.driver);
-            config.setJdbcUrl(ninjaDatasourceConfig.jdbcUrl);
-            config.setUsername(ninjaDatasourceConfig.username);
-            config.setPassword(ninjaDatasourceConfig.password);
-
-            HikariDataSource dataSource = new HikariDataSource(config);
-
-            NinjaDatasource ninjaDatasource = new NinjaDatasource();
-            ninjaDatasource.name = ninjaDatasourceConfig.name;
-            ninjaDatasource.dataSource = dataSource;
-
-            ninjaDatasources.add(ninjaDatasource);
-        }
-
-        return new NinjaDatasourcesImpl(ninjaDatasources);
-    }
-
-    @Provides
-    @Singleton
-    public NinjaDatasourceConfigs provideNinjaDatasourceConfigs(NinjaProperties ninjaProperties) {
+    public NinjaDatasourceConfigs get() {
         List<NinjaDatasourceConfig> ninjaDatasourceConfigs = getDatasources(ninjaProperties);
-        return new NinjaDatasourceConfigsImpl(ninjaDatasourceConfigs);
+        return new NinjaDatasourceConfigImpl(ninjaDatasourceConfigs);
+       
     }
 
     private List<NinjaDatasourceConfig> getDatasources(NinjaProperties ninjaProperties) {
@@ -113,5 +88,7 @@ public class NinjaJdcModule extends AbstractModule {
         return ninjaDatasources;
 
     }
+
+
 
 }

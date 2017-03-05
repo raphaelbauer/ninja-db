@@ -12,36 +12,23 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import ninja.jdbc.NinjaDatasources;
+import ninja.jdbc.NinjaDbHikariModule;
 import ninja.utils.NinjaProperties;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.IDBI;
 
 
 public class NinjaJdbiModule extends AbstractModule {
-
-
-
     @Override
     protected void configure() {
-        
-        System.out.println("jdbi module...");
-                
-                
-        //nothing to bind...
+        install(new NinjaDbHikariModule());
     }
 
     @Provides
     @Singleton
     public NinjaJdbi provideDBI(NinjaDatasources ninjaDatasources) {
-        
-        System.out.println("providing dbi");
-        
-        
         NinjaJdbiImpl ninjaJdbiImpl = new NinjaJdbiImpl(ninjaDatasources);
-
         return ninjaJdbiImpl;
     }
-
-   
 
 }

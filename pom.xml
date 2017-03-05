@@ -36,8 +36,9 @@
     <modules>
         <!-- the module is the core thing -->
         <!-- The demo is a ninja app acting as integration test and demo -->
+        <module>ninja-db-core</module>
+        <module>ninja-db-hikari</module>
         <module>ninja-db-flyway</module>
-        <module>ninja-db-jdbc</module>
         <module>ninja-db-jdbi-demo</module>
         <module>ninja-db-jdbi</module>
     </modules>

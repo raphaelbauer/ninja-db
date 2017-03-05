@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 
-public class NinjaDatasourceConfigsImpl implements NinjaDatasourceConfigs {
+public class NinjaDatasourceConfigImpl implements NinjaDatasourceConfigs {
     
     private final List<NinjaDatasourceConfig> ninjaDatasourceConfigs;
     
-    public NinjaDatasourceConfigsImpl(List<NinjaDatasourceConfig> datasources) {
+    public NinjaDatasourceConfigImpl(List<NinjaDatasourceConfig> datasources) {
         this.ninjaDatasourceConfigs = ImmutableList.copyOf(datasources);
     }
 
